@@ -1,0 +1,6 @@
+wild_boar
+bird
+cow
+elephant 
+goat
+rabbit
