@@ -1,74 +1,67 @@
-**🧩 Components Used**
-1. Raspberry Pi 4
 
-Acts as the central processing unit
+## Components
 
-Runs the CNN/TFLite model
+- **Raspberry Pi 4**
+  - Central processing unit.
+  - Runs the CNN / TFLite model and handles real-time inference.
+  - Controls sensors, alarm/deterrent outputs, and network communication.
 
-Controls sensors and alarms
+- **Pi Camera Module**
+  - Captures live video frames for the CNN model.
+  - Supports continuous monitoring. For night operation, use an IR or night-vision camera.
 
-Handles real-time inference
+- **Alarm & Deterrent System**
+  - Multi-stage deterrent setup that escalates from visual to mechanical responses.
 
-2. Pi Camera Module
+  | Stage | Component               | Purpose                 |
+  |-------|-------------------------|-------------------------|
+  | 1     | LED / Flash Light       | Visual deterrence       |
+  | 2     | Ultrasonic Buzzer       | Sound-based deterrence  |
+  | 3     | Loud Speaker            | Noise repulsion         |
+  | 4     | Mechanical Scare Device | Physical deterrence     |
 
-Captures live video feed from the field
+- **Communication Module (Optional)**
+  - GSM or Wi‑Fi module to send alerts to the farmer's mobile phone or cloud service.
+  - Used as a final notification method if local deterrents fail.
 
-Provides input frames for the CNN model
+- **Power Supply**
+  - Battery pack (recommended: UPS HAT or rechargeable battery bank).
+  - Optional solar panel + charge controller for remote deployments.
+  - Consider power budgeting for Pi, camera, and deterrent devices.
 
-Supports continuous monitoring
+## Hardware Workflow
 
-3. Alarm & Deterrent System
+1. The Pi Camera continuously captures frames from the field.  
+2. The Raspberry Pi preprocesses frames and runs the CNN / TFLite model for detection.  
+3. The decision logic evaluates detections and confidence scores.  
+4. If an intrusion or target is detected, the system triggers deterrent stages sequentially.  
 
-**Multi-stage deterrent setup:**
+## Suggested Wiring & Integration Notes
 
-Stage	Component	Purpose
-1	LED / Flash Light	Visual deterrence
+- Use a proper power supply capable of delivering stable 5V at 3A (or a Pi UPS) to the Raspberry Pi 4.  
+- Connect the Pi Camera using the ribbon cable to the CSI port; enable the camera interface in Raspberry Pi OS.  
+- Drive high-current devices (speakers, mechanical scare devices) through a relay board or MOSFETs — do NOT drive them directly from GPIO pins.  
+- Use level shifting or appropriate drivers when interfacing with 12V devices.  
+- Add fuses and transient protection for outdoor deployments.
 
-2	Ultrasonic Buzzer	Sound-based deterrence
+## Power Optimization Tips
 
-3	Loud Speaker	Noise repulsion
+- Disable unused services on the Pi to reduce CPU load and power consumption.  
+- Use TFLite models optimized for edge devices to lower inference time and energy use.  
+- Consider duty cycling the camera or entering low-power modes during idle periods.
 
-4	Mechanical Scare Device	Physical deterrence
+## Deployment & Environmental Considerations
 
-4. Communication Module (Optional)
+- Use a weather-resistant or IP-rated enclosure for outdoor use.  
+- Mount the camera at a height and angle that maximizes field-of-view while reducing false positives.  
+- Add an IR illuminator or IR-capable camera for night operation.  
+- For larger areas, use a multi-camera setup and distributed Pis, or a camera switcher.
 
-GSM / Wi-Fi module
+## Future Enhancements
 
-Sends alerts to farmer’s mobile
-
-Used when all deterrent stages fail
-
-5. Power Supply
-
-Battery pack
-
-Solar panel (optional for remote areas)
-
-Enables continuous operation
-
-**🔌 Hardware Workflow**
-
-Camera captures live video
-
-Raspberry Pi processes frames
-
-CNN model performs inference
-
-Decision logic checks confidence
-
-Alarm stages are triggered
-
-Farmer is notified if needed
-
-**📌 Future Enhancements**
-
-Infrared / night-vision camera
-
-Thermal camera integration
-
-Weather-resistant casing
-
-Low-power optimization
-
-Multi-camera setup
+- Infrared / night-vision camera integration.  
+- Thermal camera integration for robust detection in poor lighting or fog.  
+- Full solar-power + power management for long-term remote operation.  
+- Mechanical design improvements for faster actuation of scare devices.  
+- Low-power hardware variants or microcontroller-based pre-filtering to reduce Pi wake-ups.
 
