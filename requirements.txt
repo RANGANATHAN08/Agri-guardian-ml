@@ -2,3 +2,6 @@ numpy
 opencv-python
 tensorflow
 matplotlib
+raspberry - pi OS
+Machine learining 
+Deep Learning 
